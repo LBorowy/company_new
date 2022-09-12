@@ -6,8 +6,6 @@ import pl.great.company_new.dto.EmployeeDto;
 import pl.great.company_new.entity.Employee;
 import pl.great.company_new.repository.EmployeeRepository;
 
-import java.math.BigDecimal;
-
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -20,25 +18,25 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto get(String pesel) {
-        return toDto(employeeRepository.get(pesel));
-    }
-
-    @Override
-    public EmployeeDto create(String firstName, String lastName, String pesel, BigDecimal salary) throws Exception {
-        Employee employee = employeeRepository.create(firstName, lastName, pesel, salary);
+        Employee employee = employeeRepository.get(pesel);
         return toDto(employee);
     }
 
     @Override
-    public EmployeeDto update(EmployeeDto employeeDtoToUpdate) {
-        Employee employee = employeeRepository.get(employeeDtoToUpdate.getPesel());
-        return toDto(employeeRepository.update(employee));
+    public EmployeeDto create(EmployeeDto employeeDto) throws Exception {
+        Employee employee = employeeRepository.create(employeeDto.getFirstName(), employeeDto.getLastName(), employeeDto.getPesel(), employeeDto.getSalary());
+        return toDto(employee);
+    }
+
+    @Override
+    public EmployeeDto update(EmployeeDto employeeDto) {
+        Employee employee = employeeRepository.update(toDao(employeeDto));
+        return toDto(employee);
     }
 
     @Override
     public boolean delete(String pesel) {
-        Employee employeeToRemove = employeeRepository.get(pesel);
-        return employeeRepository.delete(employeeToRemove.getPesel());
+        return employeeRepository.delete(pesel);
     }
 
     private EmployeeDto toDto(Employee employee) {
@@ -48,5 +46,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeDto.setPesel(employee.getPesel());
         employeeDto.setSalary(employee.getSalary());
         return employeeDto;
+    }
+
+    private Employee toDao(EmployeeDto employeeDto) {
+        Employee employee = new Employee();
+        employee.setFirstName(employeeDto.getFirstName());
+        employee.setLastName(employeeDto.getLastName());
+        employee.setPesel(employeeDto.getPesel());
+        employee.setSalary(employeeDto.getSalary());
+        return employee;
     }
 }

@@ -54,18 +54,17 @@ class EmployeeServiceImplTest {
     void create() throws Exception {
         when(employeeRepository.create(anyString(), anyString(), anyString(), any())).thenReturn(employee);
 
-        EmployeeDto employeeDto = employeeService.create(FIRST_NAME, LAST_NAME, PESEL, SALARY);
+        EmployeeDto createdEmployeeDto = employeeService.create(employeeDto);
 
-        assertNotNull(employeeDto);
-        assertEquals(FIRST_NAME, employeeDto.getFirstName());
-        assertEquals(LAST_NAME, employeeDto.getLastName());
-        assertEquals(PESEL, employeeDto.getPesel());
-        assertEquals(SALARY, employeeDto.getSalary());
+        assertNotNull(createdEmployeeDto);
+        assertEquals(FIRST_NAME, createdEmployeeDto.getFirstName());
+        assertEquals(LAST_NAME, createdEmployeeDto.getLastName());
+        assertEquals(PESEL, createdEmployeeDto.getPesel());
+        assertEquals(SALARY, createdEmployeeDto.getSalary());
     }
 
     @Test
     void update() {
-        when(employeeRepository.get(any(String.class))).thenReturn(employee);
         when(employeeRepository.update(any(Employee.class))).thenReturn(employee);
 
         EmployeeDto updatedEmployeeDto = employeeService.update(employeeDto);
@@ -79,7 +78,6 @@ class EmployeeServiceImplTest {
 
     @Test
     void delete() {
-        when(employeeRepository.get(PESEL)).thenReturn(employee);
         when(employeeRepository.delete(PESEL)).thenReturn(Boolean.TRUE);
 
         boolean isEmployeeDeleted = employeeService.delete(PESEL);

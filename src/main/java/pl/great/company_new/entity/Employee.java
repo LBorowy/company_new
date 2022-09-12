@@ -8,6 +8,8 @@ public class Employee {
     private String pesel;
     private BigDecimal salary;
 
+    public Employee() { }
+
     public Employee(String firstName, String lastName, String pesel, BigDecimal salary) {
         this.firstName = firstName;
         this.lastName = lastName;

@@ -45,15 +45,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeDto.setLastName(employee.getLastName());
         employeeDto.setPesel(employee.getPesel());
         employeeDto.setSalary(employee.getSalary());
+        employeeDto.setCreated(employee.getCreated());
         return employeeDto;
     }
 
     private Employee toDao(EmployeeDto employeeDto) {
-        Employee employee = new Employee();
-        employee.setFirstName(employeeDto.getFirstName());
-        employee.setLastName(employeeDto.getLastName());
-        employee.setPesel(employeeDto.getPesel());
-        employee.setSalary(employeeDto.getSalary());
-        return employee;
+        return new Employee(employeeDto.getFirstName(), employeeDto.getLastName(), employeeDto.getPesel(), employeeDto.getSalary());
     }
 }

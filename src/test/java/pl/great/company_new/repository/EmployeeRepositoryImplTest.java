@@ -66,17 +66,13 @@ class EmployeeRepositoryImplTest {
 
     @Test
     void update() {
-        Employee oldEmployee = employee;
-        oldEmployee.setFirstName(FIRST_NAME_UPDATED);
-        oldEmployee.setLastName(LAST_NAME_UPDATED);
-        oldEmployee.setPesel(PESEL_UPDATED);
-        oldEmployee.setSalary(SALARY_UPDATED);
+        Employee employeeToUpdate = new Employee(FIRST_NAME_UPDATED, LAST_NAME_UPDATED, PESEL, SALARY_UPDATED);
 
-        Employee updatedEmployee = this.employeeRepository.update(oldEmployee);
+        Employee updatedEmployee = this.employeeRepository.update(employeeToUpdate);
 
         assertEquals(FIRST_NAME_UPDATED, updatedEmployee.getFirstName());
         assertEquals(LAST_NAME_UPDATED, updatedEmployee.getLastName());
-        assertEquals(PESEL_UPDATED, updatedEmployee.getPesel());
+        assertEquals(PESEL, updatedEmployee.getPesel());
         assertEquals(SALARY_UPDATED, updatedEmployee.getSalary());
     }
 

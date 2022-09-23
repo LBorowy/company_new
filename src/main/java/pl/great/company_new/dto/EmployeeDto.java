@@ -1,12 +1,14 @@
 package pl.great.company_new.dto;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class EmployeeDto {
     private String firstName;
     private String lastName;
     private String pesel;
     private BigDecimal salary;
+    private LocalDateTime created;
 
     public EmployeeDto() { };
 
@@ -47,5 +49,13 @@ public class EmployeeDto {
 
     public void setSalary(BigDecimal salary) {
         this.salary = salary;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
     }
 }

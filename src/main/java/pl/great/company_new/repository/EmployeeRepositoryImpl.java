@@ -28,7 +28,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         Employee employee = new Employee(firstName, lastName, pesel, salary);
         Employee existingEmployee = this.get(employee.getPesel());
         if (null != existingEmployee) {
-            throw new Exception("Cannot crete employee with existing pesel!");
+            throw new Exception("Cannot create employee with existing pesel: " + employee.getPesel());
         }
         employeeList.add(employee);
         return employee;

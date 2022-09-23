@@ -6,6 +6,8 @@ import pl.great.company_new.dto.EmployeeDto;
 import pl.great.company_new.entity.Employee;
 import pl.great.company_new.repository.EmployeeRepository;
 
+import java.util.Objects;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -40,16 +42,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     private EmployeeDto toDto(Employee employee) {
-        EmployeeDto employeeDto = new EmployeeDto();
-        employeeDto.setFirstName(employee.getFirstName());
-        employeeDto.setLastName(employee.getLastName());
-        employeeDto.setPesel(employee.getPesel());
-        employeeDto.setSalary(employee.getSalary());
-        employeeDto.setCreated(employee.getCreated());
-        return employeeDto;
+        if (Objects.nonNull(employee)) {
+            EmployeeDto employeeDto = new EmployeeDto();
+            employeeDto.setFirstName(employee.getFirstName());
+            employeeDto.setLastName(employee.getLastName());
+            employeeDto.setPesel(employee.getPesel());
+            employeeDto.setSalary(employee.getSalary());
+            employeeDto.setCreated(employee.getCreated());
+            return employeeDto;
+        }
+        return null;
     }
 
     private Employee toDao(EmployeeDto employeeDto) {
-        return new Employee(employeeDto.getFirstName(), employeeDto.getLastName(), employeeDto.getPesel(), employeeDto.getSalary());
+        if (Objects.nonNull(employeeDto)) {
+            return new Employee(employeeDto.getFirstName(), employeeDto.getLastName(), employeeDto.getPesel(), employeeDto.getSalary());
+        }
+        return null;
     }
 }

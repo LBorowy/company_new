@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import pl.great.company_new.dto.EmployeeDto;
+import pl.great.company_new.exception.EmployeeException;
 import pl.great.company_new.service.EmployeeServiceImpl;
 
 import java.math.BigDecimal;
@@ -47,7 +48,7 @@ class EmployeeControllerTest {
     private static EmployeeDto employeeDto;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         employeeDto = employeeService.create(new EmployeeDto(FIRST_NAME, LAST_NAME, PESEL, SALARY));
     }
 
@@ -84,13 +85,13 @@ class EmployeeControllerTest {
         assertEquals(SALARY_TWO, employeeDtoResponse.getSalary());
     }
 
-    @Ignore
+    @Test
     void cannotCreateSecondEmployeeWithExistingPesel() throws Exception {
         String employeeDtoAsJson = objectMapper.writeValueAsString(new EmployeeDto(FIRST_NAME_TWO, LAST_NAME_TWO, PESEL, SALARY_TWO));
         MvcResult result = sendRequest(MockMvcRequestBuilders.post("/employee").content(employeeDtoAsJson).contentType(MediaType.APPLICATION_JSON), HttpStatus.CONFLICT);
 
-        Exception exceptionDtoResponse = objectMapper.readValue(result.getResponse().getContentAsString(), Exception.class);
-        assertEquals("Cannot create employee with existing pesel: " + PESEL, exceptionDtoResponse.getMessage());
+        EmployeeException exceptionDtoResponse = objectMapper.readValue(result.getResponse().getContentAsString(), EmployeeException.class);
+        assertEquals("Cannot create employee with existing pesel: " + PESEL, exceptionDtoResponse.getMsg());
     }
 
     @Test

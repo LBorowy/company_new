@@ -51,7 +51,7 @@ class EmployeeServiceImplTest {
     }
 
     @Test
-    void create() throws Exception {
+    void create() {
         when(employeeRepository.create(anyString(), anyString(), anyString(), any())).thenReturn(employee);
 
         EmployeeDto createdEmployeeDto = employeeService.create(employeeDto);

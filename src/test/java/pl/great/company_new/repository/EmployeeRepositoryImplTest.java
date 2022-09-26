@@ -29,7 +29,7 @@ class EmployeeRepositoryImplTest {
     EmployeeRepository employeeRepository;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         this.employee = this.employeeRepository.create(FIRST_NAME, LAST_NAME, PESEL, SALARY);
     }
 

@@ -29,7 +29,7 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public EmployeeDto create(@RequestBody EmployeeDto employeeDto) throws Exception {
+    public EmployeeDto create(@RequestBody EmployeeDto employeeDto) {
         return this.employeeService.create(employeeDto);
     }
 

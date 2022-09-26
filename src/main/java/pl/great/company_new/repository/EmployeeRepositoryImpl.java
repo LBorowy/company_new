@@ -2,6 +2,7 @@ package pl.great.company_new.repository;
 
 import org.springframework.stereotype.Repository;
 import pl.great.company_new.entity.Employee;
+import pl.great.company_new.exception.EmployeeRequestException;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -24,11 +25,11 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
-    public Employee create(String firstName, String lastName, String pesel, BigDecimal salary) throws Exception {
+    public Employee create(String firstName, String lastName, String pesel, BigDecimal salary) {
         Employee employee = new Employee(firstName, lastName, pesel, salary);
         Employee existingEmployee = this.get(employee.getPesel());
         if (null != existingEmployee) {
-            throw new Exception("Cannot create employee with existing pesel: " + employee.getPesel());
+            throw new EmployeeRequestException("Cannot create employee with existing pesel: " + employee.getPesel());
         }
         employeeList.add(employee);
         return employee;

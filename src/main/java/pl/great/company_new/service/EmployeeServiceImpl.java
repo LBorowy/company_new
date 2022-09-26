@@ -21,11 +21,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDto get(String pesel) {
         Employee employee = employeeRepository.get(pesel);
+        // todo add validation
         return toDto(employee);
     }
 
     @Override
-    public EmployeeDto create(EmployeeDto employeeDto) throws Exception {
+    public EmployeeDto create(EmployeeDto employeeDto) {
         Employee employee = employeeRepository.create(employeeDto.getFirstName(), employeeDto.getLastName(), employeeDto.getPesel(), employeeDto.getSalary());
         return toDto(employee);
     }

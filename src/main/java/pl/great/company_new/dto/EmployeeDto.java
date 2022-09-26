@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class EmployeeDto {
+    //todo add validation
     private String firstName;
     private String lastName;
     private String pesel;

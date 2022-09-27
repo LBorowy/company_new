@@ -1,5 +1,6 @@
 package pl.great.company_new.service;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +12,8 @@ import pl.great.company_new.entity.Employee;
 import pl.great.company_new.repository.EmployeeRepositoryImpl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -22,6 +25,7 @@ class EmployeeServiceImplTest {
     private static final String LAST_NAME = "LAST_NAME";
     private static final String PESEL = "PESEL";
     private static final BigDecimal SALARY = BigDecimal.TEN;
+    private static final List<Employee> employeeList = new ArrayList<>();
 
     private Employee employee;
     private EmployeeDto employeeDto;
@@ -35,6 +39,15 @@ class EmployeeServiceImplTest {
     void setUp() {
         employee = new Employee(FIRST_NAME, LAST_NAME, PESEL, SALARY);
         employeeDto = new EmployeeDto(FIRST_NAME, LAST_NAME, PESEL, SALARY);
+        employeeList.add(employee);
+    }
+
+    @AfterEach
+    void clear() {
+        employeeService.getAll().forEach(e -> {
+            employeeService.delete(e.getPesel());
+        });
+        employeeList.clear();
     }
 
     @Test
@@ -48,6 +61,15 @@ class EmployeeServiceImplTest {
         assertEquals(LAST_NAME, employeeDto.getLastName());
         assertEquals(PESEL, employeeDto.getPesel());
         assertEquals(SALARY, employeeDto.getSalary());
+    }
+
+    @Test
+    void getAll() {
+        when(employeeRepository.getAll()).thenReturn(employeeList);
+
+        List<EmployeeDto> employeeDtoList = employeeService.getAll();
+
+        assertEquals(1, employeeDtoList.size());
     }
 
     @Test

@@ -25,6 +25,11 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
+    public List<Employee> getAll() {
+        return employeeList;
+    }
+
+    @Override
     public Employee create(String firstName, String lastName, String pesel, BigDecimal salary) {
         Employee employee = new Employee(firstName, lastName, pesel, salary);
         Employee existingEmployee = this.get(employee.getPesel());

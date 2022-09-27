@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import pl.great.company_new.entity.Employee;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,10 +37,10 @@ class EmployeeRepositoryImplTest {
 
     @AfterEach
     void clear() {
-        Employee employee = this.employeeRepository.get(PESEL) != null ? this.employeeRepository.get(PESEL) : this.employeeRepository.get(PESEL_UPDATED);
-        if (null != employee) {
-            this.employeeRepository.delete(employee.getPesel());
-        }
+        employeeRepository.getAll().stream()
+                .map(Employee::getPesel)
+                .collect(Collectors.toList())
+                .forEach(pesel -> this.employeeRepository.delete(pesel));
     }
 
     @Test
@@ -49,6 +51,13 @@ class EmployeeRepositoryImplTest {
         assertEquals(LAST_NAME, employee.getLastName());
         assertEquals(PESEL, employee.getPesel());
         assertEquals(SALARY, employee.getSalary());
+    }
+
+    @Test
+    void getAll() {
+        List<Employee> employees = this.employeeRepository.getAll();
+
+        assertEquals(1, employees.size());
     }
 
     @Test

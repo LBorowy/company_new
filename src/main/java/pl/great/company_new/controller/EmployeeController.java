@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.great.company_new.dto.EmployeeDto;
 import pl.great.company_new.service.EmployeeServiceImpl;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/employee")
 public class EmployeeController {
@@ -26,6 +28,11 @@ public class EmployeeController {
     @GetMapping("/{pesel}")
     public EmployeeDto get(@PathVariable String pesel) {
         return employeeService.get(pesel);
+    }
+
+    @GetMapping
+    public List<EmployeeDto> getAll() {
+        return employeeService.getAll();
     }
 
     @PostMapping

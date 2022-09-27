@@ -6,7 +6,9 @@ import pl.great.company_new.dto.EmployeeDto;
 import pl.great.company_new.entity.Employee;
 import pl.great.company_new.repository.EmployeeRepository;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -23,6 +25,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = employeeRepository.get(pesel);
         // todo add validation
         return toDto(employee);
+    }
+
+
+    @Override
+    public List<EmployeeDto> getAll() {
+        return employeeRepository.getAll()
+                .stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
